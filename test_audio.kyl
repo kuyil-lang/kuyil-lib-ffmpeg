@@ -1,0 +1,16 @@
+print("FFmpeg Audio Library Test")
+print("============================")
+
+print("")
+print("1. Creating audio editor...")
+let editor = audio_editor_create_kyl()
+print("Audio editor created")
+
+print("")
+print("2. Destroying audio editor...")
+audio_editor_destroy_kyl(editor)
+print("Audio editor destroyed")
+
+print("")
+print("============================")
+print("Basic test completed!")

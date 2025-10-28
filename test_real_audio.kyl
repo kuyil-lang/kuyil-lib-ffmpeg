@@ -1,0 +1,95 @@
+print("FFmpeg Audio Library - Real Audio Test")
+print("=========================================")
+print("")
+print("Prerequisites: /tmp/test_tone.mp3 must exist")
+print("Run: ffmpeg -f lavfi -i sine=frequency=440:duration=1 -y /tmp/test_tone.mp3")
+print("")
+
+print("1. Creating audio editor...")
+let editor = audio_editor_create_kyl()
+print("   Editor created successfully")
+
+print("")
+print("2. Loading audio from /tmp/test_tone.mp3...")
+let audio = audio_load_kyl(editor, "/tmp/test_tone.mp3")
+print("   Audio loaded")
+
+print("")
+print("3. Getting audio information...")
+let duration = audio_get_duration_kyl(audio)
+let sample_rate = audio_get_sample_rate_kyl(audio)
+let channels = audio_get_channels_kyl(audio)
+print("   Duration (seconds):")
+print(duration)
+print("   Sample Rate (Hz):")
+print(sample_rate)
+print("   Channels:")
+print(channels)
+
+print("")
+print("4. Testing audio operations...")
+
+print("")
+print("   - Trimming audio (0.2s - 0.8s)...")
+let trimmed = audio_trim_kyl(editor, audio, 0.2, 0.8)
+if (trimmed) {
+    print("     Trimmed successfully")
+    let trim_duration = audio_get_duration_kyl(trimmed)
+    print("     New duration (seconds):")
+    print(trim_duration)
+    audio_segment_free_kyl(trimmed)
+} else {
+    print("     Trim failed")
+}
+
+print("")
+print("   - Adjusting volume (+3 dB)...")
+let louder = audio_adjust_volume_kyl(editor, audio, 3.0)
+if (louder) {
+    print("     Volume adjusted")
+    print("     Saving to /tmp/test_louder.mp3...")
+    let saved = audio_save_kyl(editor, louder, "/tmp/test_louder.mp3", 0)
+    if (saved) {
+        print("     Saved successfully")
+    } else {
+        print("     Save failed")
+    }
+    audio_segment_free_kyl(louder)
+} else {
+    print("     Volume adjustment failed")
+}
+
+print("")
+print("   - Reversing audio...")
+let reversed = audio_reverse_kyl(editor, audio, 3.0)
+if (reversed) {
+    print("     Audio reversed")
+    audio_segment_free_kyl(reversed)
+} else {
+    print("     Reverse failed")
+}
+
+print("")
+print("   - Normalizing audio...")
+let normalized = audio_normalize_kyl(editor, audio)
+if (normalized) {
+    print("     Audio normalized")
+    audio_segment_free_kyl(normalized)
+} else {
+    print("     Normalize failed")
+}
+
+print("")
+print("5. Cleaning up...")
+audio_segment_free_kyl(audio)
+audio_editor_destroy_kyl(editor)
+print("   Resources freed")
+
+print("")
+print("=========================================")
+print("All tests completed!")
+print("")
+print("Generated files:")
+print("  /tmp/test_tone.mp3 (original)")
+print("  /tmp/test_louder.mp3 (volume +3dB)")
+print("=========================================")

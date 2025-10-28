@@ -1,0 +1,94 @@
+// FFmpeg Audio Library Demo for Kuyil
+// Basic audio editing operations
+
+print("===========================================")
+print("   🎵 KUYIL FFMPEG AUDIO LIBRARY DEMO 🎵")
+print("===========================================")
+print("")
+
+// Create audio editor
+let editor = audio_editor_create_kyl()
+print("✓ Audio editor created")
+
+// Example: Load an audio file
+print("")
+print("Example Usage:")
+print("--------------")
+print("1. Load audio:")
+print("   let audio = audio_load_kyl(editor, 'input.mp3')")
+print("")
+
+print("2. Get audio information:")
+print("   let duration = audio_get_duration_kyl(audio)")
+print("   let sample_rate = audio_get_sample_rate_kyl(audio)")
+print("   let channels = audio_get_channels_kyl(audio)")
+print("")
+
+print("3. Trim audio (5s to 10s):")
+print("   let trimmed = audio_trim_kyl(editor, audio, 5.0, 10.0)")
+print("")
+
+print("4. Adjust volume (+5dB):")
+print("   let louder = audio_adjust_volume_kyl(editor, audio, 5.0)")
+print("")
+
+print("5. Add fade in/out (2 seconds):")
+print("   let faded = audio_fade_in_kyl(editor, audio, 2.0)")
+print("   let faded_out = audio_fade_out_kyl(editor, faded, 2.0)")
+print("")
+
+print("6. Normalize audio:")
+print("   let normalized = audio_normalize_kyl(editor, audio)")
+print("")
+
+print("7. Concatenate multiple audio segments:")
+print("   let segments = [audio1, audio2, audio3]")
+print("   let concatenated = audio_concat_kyl(editor, segments)")
+print("")
+
+print("8. Merge audio with volume levels:")
+print("   let segments = [audio1, audio2]")
+print("   let volumes = [0.0, -3.0]  // dB levels")
+print("   let merged = audio_merge_kyl(editor, segments, volumes)")
+print("")
+
+print("9. Overlay audio at specific position:")
+print("   let overlaid = audio_overlay_kyl(editor, base_audio, overlay_audio, 5.0)")
+print("")
+
+print("10. Change audio speed (1.5x faster):")
+print("    let faster = audio_speed_change_kyl(editor, audio, 1.5)")
+print("")
+
+print("11. Reverse audio:")
+print("    let reversed = audio_reverse_kyl(editor, audio)")
+print("")
+
+print("12. Save audio (format: 0=MP3, 1=WAV, 2=AAC, 3=OGG, 4=FLAC, 5=M4A):")
+print("    audio_save_kyl(editor, audio, 'output.mp3', 0)")
+print("")
+
+print("13. Clean up:")
+print("    audio_segment_free_kyl(audio)")
+print("    audio_editor_destroy_kyl(editor)")
+print("")
+
+// Cleanup
+audio_editor_destroy_kyl(editor)
+print("✓ Audio editor destroyed")
+
+print("")
+print("===========================================")
+print("Audio Format Codes:")
+print("  0 = MP3")
+print("  1 = WAV")
+print("  2 = AAC")
+print("  3 = OGG")
+print("  4 = FLAC")
+print("  5 = M4A")
+print("===========================================")
+print("")
+print("Note: This library uses ffmpeg command-line")
+print("      tool for audio processing.")
+print("      Make sure ffmpeg is installed:")
+print("      sudo apt-get install ffmpeg")
