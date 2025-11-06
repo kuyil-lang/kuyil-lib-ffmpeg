@@ -1,9 +1,33 @@
 #define _POSIX_C_SOURCE 200809L
 // Kuyil Bridge for FFmpeg Audio Library
 #include "ffmpeg_utils.h"
-#include "../../src/vm.h"
+#include "../../src/ast.h"
 #include <string.h>
 #include <stdlib.h>
+
+// Kuyil interface signature metadata
+__attribute__((visibility("default")))
+const char* kyl_interface_signature_text = 
+    "ffmpeg getLastError() -> string\n"
+    "ffmpeg clearError() -> bool\n"
+    "audio getDuration(path: string) -> float64\n"
+    "audio getSampleRate(path: string) -> int32\n"
+    "audio getChannels(path: string) -> int32\n"
+    "editor create() -> int32\n"
+    "editor destroy(handle: int32) -> bool\n"
+    "audio load(path: string) -> int32\n"
+    "audio save(handle: int32, path: string) -> bool\n"
+    "audio segmentFree(handle: int32) -> bool\n"
+    "audio trim(handle: int32, startMs: float64, endMs: float64) -> int32\n"
+    "audio fadeIn(handle: int32, durationMs: float64) -> int32\n"
+    "audio fadeOut(handle: int32, durationMs: float64) -> int32\n"
+    "audio adjustVolume(handle: int32, factor: float64) -> int32\n"
+    "audio normalize(handle: int32) -> int32\n"
+    "audio concat(handle1: int32, handle2: int32) -> int32\n"
+    "audio merge(handle1: int32, handle2: int32) -> int32\n"
+    "audio overlay(base: int32, overlay: int32, positionMs: float64) -> int32\n"
+    "audio speedChange(handle: int32, factor: float64) -> int32\n"
+    "audio reverse(handle: int32) -> int32\n";
 
 // Helper functions
 static Value ptr_to_value(void* ptr) {
@@ -381,3 +405,25 @@ Value ffmpeg_clear_error_kyl(int arg_count, Value* args) {
     ffmpeg_clear_error();
     return bool_to_value(true);
 }
+
+// LowerCamel aliases for cleaner interface
+Value getLastError(int arg_count, Value* args) { return ffmpeg_get_last_error_kyl(arg_count, args); }
+Value clearError(int arg_count, Value* args) { return ffmpeg_clear_error_kyl(arg_count, args); }
+Value getDuration(int arg_count, Value* args) { return audio_get_duration_kyl(arg_count, args); }
+Value getSampleRate(int arg_count, Value* args) { return audio_get_sample_rate_kyl(arg_count, args); }
+Value getChannels(int arg_count, Value* args) { return audio_get_channels_kyl(arg_count, args); }
+Value create(int arg_count, Value* args) { return audio_editor_create_kyl(arg_count, args); }
+Value destroy(int arg_count, Value* args) { return audio_editor_destroy_kyl(arg_count, args); }
+Value load(int arg_count, Value* args) { return audio_load_kyl(arg_count, args); }
+Value save(int arg_count, Value* args) { return audio_save_kyl(arg_count, args); }
+Value segmentFree(int arg_count, Value* args) { return audio_segment_free_kyl(arg_count, args); }
+Value trim(int arg_count, Value* args) { return audio_trim_kyl(arg_count, args); }
+Value fadeIn(int arg_count, Value* args) { return audio_fade_in_kyl(arg_count, args); }
+Value fadeOut(int arg_count, Value* args) { return audio_fade_out_kyl(arg_count, args); }
+Value adjustVolume(int arg_count, Value* args) { return audio_adjust_volume_kyl(arg_count, args); }
+Value normalize(int arg_count, Value* args) { return audio_normalize_kyl(arg_count, args); }
+Value concat(int arg_count, Value* args) { return audio_concat_kyl(arg_count, args); }
+Value merge(int arg_count, Value* args) { return audio_merge_kyl(arg_count, args); }
+Value overlay(int arg_count, Value* args) { return audio_overlay_kyl(arg_count, args); }
+Value speedChange(int arg_count, Value* args) { return audio_speed_change_kyl(arg_count, args); }
+Value reverse(int arg_count, Value* args) { return audio_reverse_kyl(arg_count, args); }
