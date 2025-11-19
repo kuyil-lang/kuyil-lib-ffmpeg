@@ -31,7 +31,9 @@ const char* kyl_interface_signature_text =
 
 // Helper functions
 static Value ptr_to_value(void* ptr) {
-    Value result = {VALUE_NUMBER};
+    Value result;
+    memset(&result, 0, sizeof(Value));
+    result.type = VALUE_NUMBER;
     result.as.number = (double)(uintptr_t)ptr;
     return result;
 }
@@ -42,19 +44,25 @@ static void* value_to_ptr(Value* val) {
 }
 
 static Value string_to_value(const char* str) {
-    Value result = {VALUE_STRING};
+    Value result;
+    memset(&result, 0, sizeof(Value));
+    result.type = VALUE_STRING;
     result.as.string = str ? strdup(str) : strdup("");
     return result;
 }
 
 static Value bool_to_value(bool b) {
-    Value result = {VALUE_BOOL};
+    Value result;
+    memset(&result, 0, sizeof(Value));
+    result.type = VALUE_BOOL;
     result.as.boolean = b;
     return result;
 }
 
 static Value number_to_value(double num) {
-    Value result = {VALUE_NUMBER};
+    Value result;
+    memset(&result, 0, sizeof(Value));
+    result.type = VALUE_NUMBER;
     result.as.number = num;
     return result;
 }
